@@ -1,0 +1,13 @@
+# GIS Stuffs
+.asc
+.aux.xml
+
+# Environment variables
+.env
+
+# Python
+*.pyc
+__pycache__/
+
+# JetBrains
+.idea/

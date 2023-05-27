@@ -1,0 +1,186 @@
+openapi: 3.0.0
+paths:
+  /api/v1/isladecalor/lts:
+    post:
+      operationId: LandSurfaceTemperature
+      summary: Create a png image of the Land Surface Temperature in a Square's zone and return that image and the max, min, mean and value of the one point into this zone
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LTSZoneData"
+      responses:
+        "201":
+          description: Create Land Surface Temperature Zone
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LTSZone"
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorDto"
+      tags: [Land Surface Temperature]
+      security:
+        - X-API-KEY:
+            - X-API-KEY
+info:
+  title: Isla de Calor
+  description: ""
+  version: 0.0.1
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    X-API-KEY:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      description: API Key For External calls
+  schemas:
+    ErrorDto:
+      type: object
+      properties:
+        status:
+          type: string
+          description: http code
+        message:
+          type: string
+          description: message
+      required:
+        - message
+    LTSZone:
+      type: object
+      properties:
+        image:
+          type: string
+          format: byte
+          description: Base64-encoded contents of LTS zone image        
+          example: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4cQAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwA
+        values:
+          type: object
+          description: max, min, mean and value of the one point into this zone
+          properties:
+            point:
+              properties:
+                lts: 
+                  type: number
+                  format: double
+                  description: lts of the point
+                  example: 40.420287374
+                point: 
+                  type: object
+                  description: Point of the Zone
+                  properties:
+                    type:
+                      type: string
+                      description: Type of the geometry
+                      example: Point
+                    coordinates:
+                      type: array
+                      description: Coordinates of the geometry
+                      items:
+                        type: number
+                        format: double
+                      example:
+                        coordinates:
+                          - -4.463696
+                          - 36.728158          
+            max:
+              properties:
+                lts: 
+                  type: number
+                  format: double
+                  description: Max lts of into this zone
+                  example: 40.420287374
+                point: 
+                  type: object
+                  description: Point of the zone with max lts
+                  properties:
+                    type:
+                      type: string
+                      description: Type of the geometry
+                      example: Point
+                    coordinates:
+                      type: array
+                      description: Coordinates of the geometry
+                      items:
+                        type: number
+                        format: double
+                      example:
+                        coordinates:
+                          - -4.463696
+                          - 36.728158
+            min:
+              properties:
+                lts: 
+                  type: number
+                  format: double
+                  description: Min lts into this zone
+                  example: 40.420287374
+                point: 
+                  type: object
+                  description: Point of the zone with min value
+                  properties:
+                    type:
+                      type: string
+                      description: Type of the geometry
+                      example: Point
+                    coordinates:
+                      type: array
+                      description: Coordinates of the geometry
+                      items:
+                        type: number
+                        format: double
+                      example:
+                        coordinates:
+                          - -4.463696
+                          - 36.728158
+            mean:
+              type: number
+              format: double
+              description: Mean value of the one point into this zone
+              example: 40.420237722            
+      required:
+        - image
+        - values
+    LTSZoneData:
+      type: object
+      properties:
+        sideSquare:
+          type: number
+          description: Side of the square zone (meters) 
+          example: 500
+        point:
+          type: object
+          description: Point of the zone to calculate the Land Surface Temperature (max, min, mean and value)
+          properties:
+            type:
+              type: string
+              description: Type of the geometry
+              example: Point
+            coordinates:
+              type: array
+              description: Coordinates of the geometry
+              items:
+                type: number
+                format: double
+              example:
+                coordinates:
+                  - -4.463696
+                  - 36.728158
+      required:
+        - sideSquare
+        - point
