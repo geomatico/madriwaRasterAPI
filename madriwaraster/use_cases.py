@@ -5,8 +5,8 @@ from rasterio.mask import mask
 from shapely import Geometry, Point, Polygon
 from shapely.ops import transform
 
-from domain import HeatInland
-from repository import RasterRepository
+from madriwaraster.domain import HeatInland
+from madriwaraster.repository import RasterRepository
 
 
 def calculate_aoi(point: Point, side_square: int) -> Polygon:

@@ -1,8 +1,8 @@
 import pytest
 from shapely import Point
 
-from repository import InMemoryRasterRepository
-from use_cases import (
+from madriwaraster.repository import InMemoryRasterRepository
+from madriwaraster.use_cases import (
     calculate_aoi,
     calculate_heat_inland,
     transform_from_wgs84_coordinates_to_32630,

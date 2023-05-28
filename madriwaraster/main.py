@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from domain import AOI, LTS, PointOfInterest, Values
-from repository import InMemoryRasterRepository
-from use_cases import calculate_heat_inland
+from madriwaraster.domain import AOI, LTS, PointOfInterest, Values
+from madriwaraster.repository import InMemoryRasterRepository
+from madriwaraster.use_cases import calculate_heat_inland
 
 API_VERSION = "v1"
 
