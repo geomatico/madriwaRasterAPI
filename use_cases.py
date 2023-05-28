@@ -67,6 +67,7 @@ def calculate_heat_inland(
         [aoi],
         crop=True,
         all_touched=True,
+        nodata=raster.profile["nodata"],
     )
     out_meta = raster.meta
 
@@ -96,7 +97,7 @@ def calculate_heat_inland(
         inland_mean=to_degrees(the_mean),
         inland_min=to_degrees(the_min),
         value=to_degrees(value),
-        image=mask_data,
+        image=None,
     )
 
 

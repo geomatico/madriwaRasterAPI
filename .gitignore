@@ -1,6 +1,6 @@
 # GIS Stuffs
 .asc
-.aux.xml
+*.aux.xml
 
 # Environment variables
 .env
