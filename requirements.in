@@ -1,5 +1,4 @@
-sentinelsat==1.2.1
-geopandas==0.12.2
 rasterio
 fastapi
 python-dotenv
+requests>=2.31.0
