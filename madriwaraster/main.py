@@ -13,7 +13,11 @@ app = FastAPI()
 raster_repository = InMemoryRasterRepository()
 
 
-@app.post(f"/api/{API_VERSION}/isladecalor/lts/", status_code=status.HTTP_201_CREATED)
+@app.post(
+    f"/api/{API_VERSION}/isladecalor/lts/",
+    status_code=status.HTTP_201_CREATED,
+    response_model=LTS,
+)
 async def heat_inland(aoi: AOI):
     try:
         the_inland = calculate_heat_inland(
