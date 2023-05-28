@@ -25,3 +25,5 @@ Para probar el proyecto:
   }
 }
 ```
+
+Para apuntar al raster hay que setear la variable de entorno `LTS_RASTER_PATH=` en un archivo `.env` que deberá estar en el raiz del proyecto.
