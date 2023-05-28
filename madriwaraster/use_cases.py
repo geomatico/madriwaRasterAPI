@@ -1,6 +1,10 @@
+import base64
+import io
+
 import numpy as np
 import pyproj
 import rasterio
+from matplotlib import pyplot as plt
 from rasterio.mask import mask
 from shapely import Geometry, Point, Polygon
 from shapely.ops import transform
@@ -97,9 +101,27 @@ def calculate_heat_inland(
         inland_mean=to_degrees(the_mean),
         inland_min=to_degrees(the_min),
         value=to_degrees(value),
-        image=None,
+        image=convert_image_to_base64(mask_data=mask_data),
     )
 
 
-def convert_image_to_base64():
-    pass
+def convert_image_to_base64(mask_data: np.ndarray):
+    temperature_band = mask_data - 273.15
+
+    # Other colormaps in https://matplotlib.org/stable/tutorials/colors/colormaps.html
+    cmap = plt.cm.jet
+
+    vmin = temperature_band.min()
+    vmax = temperature_band.max()
+
+    fig, ax = plt.subplots()
+
+    ax.imshow(temperature_band[0], cmap=cmap, vmin=vmin, vmax=vmax)
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+
+    base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    return base64_image

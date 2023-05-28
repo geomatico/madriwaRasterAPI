@@ -31,5 +31,6 @@ async def heat_inland(aoi: AOI):
             mean=the_inland.mean,
             min=the_inland.min,
             point=PointOfInterest(lts=the_inland.value, point=aoi.point),
-        )
+        ),
+        image=the_inland.image,
     )
