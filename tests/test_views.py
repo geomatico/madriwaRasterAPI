@@ -50,4 +50,5 @@ def test_422_validation_error():
         },
     }
 
-    print(data)
+    response = client.post("/api/v1/isladecalor/lts", json=data)
+    assert response.status_code == 201
